@@ -18,10 +18,8 @@ public class Helper {
             
             // Leer la respuesta
             BufferedReader in = new BufferedReader(new InputStreamReader(conexion.getInputStream()));
-            System.out.println(in);
             String inputLine;
             contenido = new StringBuilder();
-            
             while ((inputLine = in.readLine()) != null) {
                 contenido.append(inputLine);
             }
@@ -31,13 +29,19 @@ public class Helper {
             conexion.disconnect();
             
             // Imprimir el contenido de la respuesta
-            System.out.println(contenido.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
         return(contenido.toString());
     }
     
+    public static String sacarNota(String contenido) {
+        int comienzoIndice1 = contenido.indexOf("<div amp-access=\"mostrarNota\">" );
+        int comienzoIndice2 = contenido.indexOf("<p>"  , comienzoIndice1);
+        int finalIndice = contenido.indexOf("</p>", comienzoIndice1);
+        String nota = contenido.substring(comienzoIndice2+3, finalIndice);
+        return nota;
+    }
 
 
 
